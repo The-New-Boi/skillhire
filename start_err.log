@@ -1,0 +1,36 @@
+
+> rest-express@1.0.0 dev
+> cross-env NODE_ENV=development tsx server/index.ts
+
+C:\Users\Admin\OneDrive\Desktop\skill-hire\SkillHire-Frontend\node_modules\pg-pool\index.js:45
+    Error.captureStackTrace(err)
+          ^
+
+error: duplicate key value violates unique constraint "users_username_unique"
+    at C:\Users\Admin\OneDrive\Desktop\skill-hire\SkillHire-Frontend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async <anonymous> (C:\Users\Admin\OneDrive\Desktop\skill-hire\SkillHire-Frontend\node_modules\src\node-postgres\session.ts:104:19)
+    at async DatabaseStorage.createUser (C:\Users\Admin\OneDrive\Desktop\skill-hire\SkillHire-Frontend\server\storage.ts:38:20)
+    at async seedDatabase (C:\Users\Admin\OneDrive\Desktop\skill-hire\SkillHire-Frontend\server\routes.ts:283:23)
+    at async registerRoutes (C:\Users\Admin\OneDrive\Desktop\skill-hire\SkillHire-Frontend\server\routes.ts:271:3)
+    at async <anonymous> (C:\Users\Admin\OneDrive\Desktop\skill-hire\SkillHire-Frontend\server\index.ts:64:3) {
+  length: 216,
+  severity: 'ERROR',
+  code: '23505',
+  detail: 'Key (username)=(recruiter) already exists.',
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: undefined,
+  schema: 'public',
+  table: 'users',
+  column: undefined,
+  dataType: undefined,
+  constraint: 'users_username_unique',
+  file: 'nbtinsert.c',
+  line: '667',
+  routine: '_bt_check_unique'
+}
+
+Node.js v22.19.0

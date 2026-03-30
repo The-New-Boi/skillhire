@@ -10,8 +10,12 @@ import { Navbar } from "@/components/Navbar";
 // Pages
 import LoginPage from "@/pages/auth/Login";
 import CandidateDashboard from "@/pages/candidate/Dashboard";
+import JobsPage from "@/pages/candidate/JobsPage";
+import Profile from "@/pages/candidate/Profile";
+import Leaderboard from "@/pages/candidate/Leaderboard";
 import RecruiterDashboard from "@/pages/recruiter/Dashboard";
 import CreateJob from "@/pages/recruiter/CreateJob";
+import Applications from "@/pages/recruiter/Applications";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -23,12 +27,14 @@ function Router() {
         
         {/* Candidate Routes */}
         <ProtectedRoute path="/dashboard" component={CandidateDashboard} allowedRoles={["candidate"]} />
-        <ProtectedRoute path="/jobs" component={CandidateDashboard} allowedRoles={["candidate"]} /> {/* Reusing for simplicity */}
+        <ProtectedRoute path="/jobs" component={JobsPage} allowedRoles={["candidate"]} />
+        <ProtectedRoute path="/profile" component={Profile} allowedRoles={["candidate"]} />
+        <ProtectedRoute path="/leaderboard" component={Leaderboard} allowedRoles={["candidate"]} />
 
         {/* Recruiter Routes */}
         <ProtectedRoute path="/recruiter" component={RecruiterDashboard} allowedRoles={["recruiter"]} />
         <ProtectedRoute path="/jobs/create" component={CreateJob} allowedRoles={["recruiter"]} />
-        <ProtectedRoute path="/applications" component={RecruiterDashboard} allowedRoles={["recruiter"]} />
+        <ProtectedRoute path="/applications" component={Applications} allowedRoles={["recruiter"]} />
 
         {/* Default Redirect */}
         <Route path="/">

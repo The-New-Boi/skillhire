@@ -78,7 +78,11 @@ export function useCreateJob() {
         method: "POST",
         body: JSON.stringify(data),
       });
-      if (!res.ok) throw new Error("Failed to create job");
+      if (!res.ok) {
+        let errStr = "Failed to create job";
+        try { const errData = await res.json(); errStr = errData.message || errData.description || errStr; } catch(e) {}
+        throw new Error(errStr);
+      }
       return api.jobs.create.responses[201].parse(await res.json());
     },
     onSuccess: () => {
@@ -107,9 +111,12 @@ export function useApplyJob() {
   const { toast } = useToast();
 
   return useMutation({
-    mutationFn: async (jobId: number) => {
+    mutationFn: async ({ jobId, resumeUrl }: { jobId: number; resumeUrl?: string }) => {
       const url = buildUrl(api.jobs.apply.path, { id: jobId });
-      const res = await authFetch(url, { method: "POST" });
+      const res = await authFetch(url, { 
+        method: "POST",
+        body: JSON.stringify({ resumeUrl })
+      });
       if (!res.ok) {
         if (res.status === 401) throw new Error("Unauthorized");
         const err = await res.json();
@@ -123,6 +130,24 @@ export function useApplyJob() {
     },
     onError: (error: Error) => {
       toast({ title: "Application Failed", description: error.message, variant: "destructive" });
+    },
+  });
+}
+
+export function useResumeCheck() {
+  const { toast } = useToast();
+
+  return useMutation({
+    mutationFn: async (data: z.infer<typeof api.resume.check.input>) => {
+      const res = await authFetch(api.resume.check.path, {
+        method: "POST",
+        body: JSON.stringify(data),
+      });
+      if (!res.ok) throw new Error("AI resume check failed");
+      return api.resume.check.responses[200].parse(await res.json());
+    },
+    onError: (error: Error) => {
+      toast({ title: "Check Failed", description: error.message, variant: "destructive" });
     },
   });
 }

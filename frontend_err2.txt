@@ -1,0 +1,50 @@
+﻿node.exe : C:\Users\Ad
+min\OneDrive\Desktop\s
+kill-hire\SkillHire-Fr
+ontend\server\db.ts:9
+At line:1 char:1
++ & "C:\Program Files\
+nodejs/node.exe" 
+"C:\Program 
+Files\nodejs/node_mo 
+...
++ ~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
+~~~~~
+    + CategoryInfo    
+          : NotSpeci  
+  fied: (C:\Users\A   
+ dmin\...\server\d    
+b.ts:9:String) []    
+, RemoteException
+    + FullyQualifiedE 
+   rrorId : NativeCo  
+  mmandError
+ 
+  throw new Error(
+        ^
+
+
+Error: DATABASE_URL 
+must be set. Did you 
+forget to provision a 
+database?
+    at <anonymous> (C:
+\Users\Admin\OneDrive\
+Desktop\skill-hire\Ski
+llHire-Frontend\server
+\db.ts:9:9)
+    at ModuleJob.run (
+node:internal/modules/
+esm/module_job:345:25)
+    at async onImport.
+tracePromise.__proto__
+ (node:internal/module
+s/esm/loader:651:26)
+    at async asyncRunE
+ntryPointWithESMLoader
+ (node:internal/module
+s/run_main:117:5)
+
+Node.js v22.19.0

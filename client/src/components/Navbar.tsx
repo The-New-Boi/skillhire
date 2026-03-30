@@ -1,6 +1,6 @@
 import { Link, useLocation } from "wouter";
 import { useAuth } from "@/lib/auth-context";
-import { LogOut, LayoutDashboard, Briefcase, PlusCircle, Layers, User } from "lucide-react";
+import { LogOut, LayoutDashboard, Briefcase, PlusCircle, Layers, User, Trophy } from "lucide-react";
 import { Button } from "./ui/button";
 
 export function Navbar() {
@@ -23,34 +23,21 @@ export function Navbar() {
               </span>
             </Link>
 
-            <div className="hidden md:flex items-center space-x-4">
+            <div className="hidden md:flex items-center space-x-1">
               {user?.role === "candidate" && (
                 <>
-                  <Link href="/dashboard" className={`flex items-center gap-2 px-3 py-2 rounded-md transition-colors ${location === "/dashboard" ? "bg-white/10 text-white" : "text-gray-400 hover:text-white"}`}>
-                    <LayoutDashboard size={18} />
-                    Dashboard
-                  </Link>
-                  <Link href="/jobs" className={`flex items-center gap-2 px-3 py-2 rounded-md transition-colors ${location === "/jobs" ? "bg-white/10 text-white" : "text-gray-400 hover:text-white"}`}>
-                    <Briefcase size={18} />
-                    Jobs
-                  </Link>
+                  <NavLink href="/dashboard" label="Dashboard" icon={LayoutDashboard} active={location === "/dashboard"} />
+                  <NavLink href="/jobs" label="Jobs" icon={Briefcase} active={location === "/jobs"} />
+                  <NavLink href="/leaderboard" label="Leaderboard" icon={Trophy} active={location === "/leaderboard"} />
+                  <NavLink href="/profile" label="Profile" icon={User} active={location === "/profile"} />
                 </>
               )}
 
               {user?.role === "recruiter" && (
                 <>
-                  <Link href="/recruiter" className={`flex items-center gap-2 px-3 py-2 rounded-md transition-colors ${location === "/recruiter" ? "bg-white/10 text-white" : "text-gray-400 hover:text-white"}`}>
-                    <LayoutDashboard size={18} />
-                    Dashboard
-                  </Link>
-                  <Link href="/jobs/create" className={`flex items-center gap-2 px-3 py-2 rounded-md transition-colors ${location === "/jobs/create" ? "bg-white/10 text-white" : "text-gray-400 hover:text-white"}`}>
-                    <PlusCircle size={18} />
-                    Post Job
-                  </Link>
-                  <Link href="/applications" className={`flex items-center gap-2 px-3 py-2 rounded-md transition-colors ${location === "/applications" ? "bg-white/10 text-white" : "text-gray-400 hover:text-white"}`}>
-                    <Layers size={18} />
-                    Applications
-                  </Link>
+                  <NavLink href="/recruiter" label="Dashboard" icon={LayoutDashboard} active={location === "/recruiter"} />
+                  <NavLink href="/jobs/create" label="Post Job" icon={PlusCircle} active={location === "/jobs/create"} />
+                  <NavLink href="/applications" label="Applications" icon={Layers} active={location === "/applications"} />
                 </>
               )}
             </div>
@@ -77,5 +64,21 @@ export function Navbar() {
         </div>
       </div>
     </nav>
+  );
+}
+
+function NavLink({ href, label, icon: Icon, active }: { href: string; label: string; icon: any; active: boolean }) {
+  return (
+    <Link 
+      href={href} 
+      className={`flex items-center gap-2 px-3 py-2 rounded-md transition-all duration-200 text-sm ${
+        active 
+          ? "bg-white/10 text-white shadow-sm" 
+          : "text-gray-400 hover:text-white hover:bg-white/5"
+      }`}
+    >
+      <Icon size={16} />
+      {label}
+    </Link>
   );
 }

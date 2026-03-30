@@ -47,6 +47,7 @@ export const submitTestSchema = z.object({
     options: z.array(z.string()),
     correctAnswer: z.number(),
   })),
+  cheatingFlags: z.number().optional().default(0),
 });
 
 export const api = {
@@ -134,7 +135,7 @@ export const api = {
     create: {
       method: 'POST' as const,
       path: '/api/companies' as const,
-      input: insertCompanySchema,
+      input: insertCompanySchema.omit({ recruiterId: true }),
       responses: {
         201: z.custom<typeof companies.$inferSelect>(),
         400: errorSchemas.validation,
@@ -190,6 +191,22 @@ export const api = {
       path: '/api/applications' as const,
       responses: {
         200: z.array(z.custom<typeof jobApplications.$inferSelect & { job: typeof jobs.$inferSelect, user: typeof users.$inferSelect }>()),
+      },
+    },
+  },
+  resume: {
+    check: {
+      method: 'POST' as const,
+      path: '/api/resume/check' as const,
+      input: z.object({
+        resumeText: z.string(),
+        jobId: z.number(),
+      }),
+      responses: {
+        200: z.object({
+          matchScore: z.number(),
+          summary: z.string(),
+        }),
       },
     },
   }

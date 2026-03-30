@@ -15,7 +15,8 @@ import { ChevronLeft } from "lucide-react";
 
 // Extend schema for form handling (requirements as comma-separated string)
 const formSchema = insertJobSchema.extend({
-  requirements: z.string().transform(str => str.split(',').map(s => s.trim())),
+  companyId: z.coerce.number(),
+  requirements: z.string(),
   salaryRange: z.string().optional(),
 });
 

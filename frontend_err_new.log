@@ -1,0 +1,19 @@
+C:\Users\Admin\OneDrive\Desktop\skill-hire\SkillHire-Frontend\node_modules\pg-pool\index.js:45
+    Error.captureStackTrace(err)
+          ^
+
+Error: getaddrinfo ENOTFOUND db.zbmdnocytdzbnvggwrlw.supabase.co
+    at C:\Users\Admin\OneDrive\Desktop\skill-hire\SkillHire-Frontend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async <anonymous> (C:\Users\Admin\OneDrive\Desktop\skill-hire\SkillHire-Frontend\node_modules\src\node-postgres\session.ts:104:19)
+    at async DatabaseStorage.getUserByUsername (C:\Users\Admin\OneDrive\Desktop\skill-hire\SkillHire-Frontend\server\storage.ts:33:20)
+    at async seedDatabase (C:\Users\Admin\OneDrive\Desktop\skill-hire\SkillHire-Frontend\server\routes.ts:244:25)
+    at async registerRoutes (C:\Users\Admin\OneDrive\Desktop\skill-hire\SkillHire-Frontend\server\routes.ts:237:3)
+    at async <anonymous> (C:\Users\Admin\OneDrive\Desktop\skill-hire\SkillHire-Frontend\server\index.ts:64:3) {
+  errno: -3008,
+  code: 'ENOTFOUND',
+  syscall: 'getaddrinfo',
+  hostname: 'db.zbmdnocytdzbnvggwrlw.supabase.co'
+}
+
+Node.js v22.19.0

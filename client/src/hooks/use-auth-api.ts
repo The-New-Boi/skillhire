@@ -83,10 +83,9 @@ export function useRegister() {
       return api.auth.register.responses[201].parse(await res.json());
     },
     onSuccess: (data) => {
-      login(data.token, data.user);
       toast({
         title: "Account Created",
-        description: "Welcome to SkillHire AI",
+        description: "Please log in using your new credentials.",
       });
     },
     onError: (error: Error) => {

@@ -5,12 +5,16 @@ import { z } from "zod";
 export const users = pgTable("users", {
   id: serial("id").primaryKey(),
   username: text("username").notNull().unique(),
+  email: text("email"),
   password: text("password").notNull(),
   role: text("role").notNull().default("candidate"), // 'candidate' | 'recruiter'
+  subscriptionTier: text("subscription_tier").notNull().default("free"), // 'free' | 'pro'
+  isHighlighted: boolean("is_highlighted").notNull().default(false),
   name: text("name").notNull(),
   bio: text("bio"),
   skills: text("skills").array(),
   experienceYears: integer("experience_years"),
+  profileImage: text("profile_image"), // base64 encoded profile picture
   createdAt: timestamp("created_at").defaultNow(),
 });
 
@@ -39,6 +43,7 @@ export const skillChecks = pgTable("skill_checks", {
   field: text("field").notNull(), // e.g., 'React', 'Python', 'Data Science'
   score: integer("score").notNull(),
   passed: boolean("passed").notNull(),
+  cheatingFlags: integer("cheating_flags").default(0), // Number of proctoring incidents
   createdAt: timestamp("created_at").defaultNow(),
 });
 
@@ -48,6 +53,8 @@ export const jobApplications = pgTable("job_applications", {
   userId: integer("user_id").notNull(), // Foreign key to users.id
   status: text("status").notNull().default("pending"), // 'pending', 'accepted', 'rejected'
   testScore: integer("test_score"), // Score from the specific test for this job application (if any)
+  resumeUrl: text("resume_url"), // URL or base64 of the uploaded resume
+  aiScreeningResult: text("ai_screening_result"), // AI feedback on resume matching
   createdAt: timestamp("created_at").defaultNow(),
 });
 
@@ -64,7 +71,9 @@ export const loginSchema = z.object({
   password: z.string().min(1, "Password is required"),
 });
 
-export const registerSchema = insertUserSchema;
+export const registerSchema = insertUserSchema.extend({
+  email: z.string().email("Invalid email address"),
+});
 
 // Types
 export type User = typeof users.$inferSelect;
@@ -99,6 +108,7 @@ export type TestResultRequest = {
   field: string;
   answers: { questionId: number; selectedOption: number }[];
   questions: TestQuestion[]; // Send back questions to verify answers server-side (simplification)
+  cheatingFlags?: number;
 };
 
 export type TestResultResponse = {

@@ -9,10 +9,12 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Users, Briefcase, Building2, Plus } from "lucide-react";
+import { Users, Briefcase, Building2, Plus, Lock } from "lucide-react";
+import { UpgradeModal } from "@/components/UpgradeModal";
 
 export default function RecruiterDashboard() {
   const { user } = useAuth();
+  const [showUpgradeModal, setShowUpgradeModal] = useState(false);
   const { data: applications, isLoading: appsLoading } = useApplications();
   const { data: jobs } = useJobs();
   const { data: companies } = useCompanies();
@@ -30,13 +32,23 @@ export default function RecruiterDashboard() {
           </div>
           <div className="flex gap-4">
             <CreateCompanyDialog />
-            <Link href="/jobs/create">
-              <Button className="btn-primary gap-2">
-                <Plus size={16} /> Post Job
+            
+            {(user as any)?.subscriptionTier === 'free' && (jobs?.filter(j => j.company?.recruiterId === user?.id).length || 0) >= 1 ? (
+              <Button className="btn-primary gap-2 bg-yellow-600 hover:bg-yellow-700 text-white" onClick={() => setShowUpgradeModal(true)}>
+                <Lock size={16} /> Unlock Job Posts
               </Button>
-            </Link>
+            ) : (
+              <Link href="/jobs/create">
+                <Button className="btn-primary gap-2">
+                  <Plus size={16} /> Post Job
+                </Button>
+              </Link>
+            )}
+
           </div>
         </div>
+
+        <UpgradeModal open={showUpgradeModal} onOpenChange={setShowUpgradeModal} />
 
         {/* Stats */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">

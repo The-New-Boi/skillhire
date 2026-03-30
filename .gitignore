@@ -4,3 +4,11 @@ dist
 server/public
 vite.config.ts.*
 *.tar.gz
+.env
+node_modules/
+dist/
+*.log
+*.txt
+.local/
+dummy_resume.txt
+test_frontend.ps1
